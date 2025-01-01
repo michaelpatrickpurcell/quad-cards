@@ -1,0 +1,167 @@
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+
+\usepackage{fontspec}
+\setmainfont[Scale=3.75]{Card Characters}%[Scale=4.25]{Card Characters}
+
+\usepackage{contour}
+\contournumber{128}
+
+\usepackage{calc}
+
+\newlength{\cardwidth}
+\newlength{\cardheight}
+\newlength{\bleed}
+\newlength{\horizspace}
+\newlength{\vertspace}
+\newlength{\vertdist}
+\newlength{\horizdist}
+
+\setlength{\cardwidth}{3.5in}
+\setlength{\cardheight}{3.5in}
+\setlength{\bleed}{0.0625in}
+\setlength{\horizspace}{0.0625in}
+\setlength{\horizdist}{\cardwidth + 2\bleed + \horizspace}
+\setlength{\vertspace}{0.0625in}
+\setlength{\vertdist}{\cardheight + 2\bleed + \vertspace}
+
+\newcommand{\myclub}{\contour{black}{\textcolor{ForestGreen}{]}}}
+\newcommand{\mydiamond}{\contour{black}{\textcolor{Goldenrod}{[}}}
+\newcommand{\myheart}{\contour{black}{\textcolor{Red}{\{}}}
+\newcommand{\myspade}{\contour{black}{\textcolor{RoyalBlue}{\}}}}
+
+\tikzset{cardoutline/.pic={
+\node[draw, line width=1.0mm, minimum height=3.5in, minimum width=2.5in, rounded corners=3mm, inner sep=0pt] at (0,0) {};
+}}
+
+\tikzset{guidecross/.pic={
+	\draw[#1] (-\bleed,0) -- (\bleed,0);
+	\draw[#1] (0, -\bleed) -- (0, \bleed);
+}}
+
+\tikzset{cutguide/.pic={
+	\pic () at (-\cardwidth/2, \cardheight/2) {guidecross={#1}};
+	\pic () at (\cardwidth/2, \cardheight/2) {guidecross={#1}};
+	\pic () at (-\cardwidth/2, -\cardheight/2) {guidecross={#1}};
+	\pic () at (\cardwidth/2, -\cardheight/2) {guidecross={#1}};
+}}
+
+\tikzset{numberclub/.pic={
+	\node[minimum width=1.75in, minimum height=1.75in, inner sep=0pt] at (0,0) {\Huge\myclub};
+	\node at (0,0) {\LARGE\contour{black}{\textcolor{white}{#1}}};
+}}
+
+\tikzset{numberclubalt/.pic={
+	\node at (0,0) {\Large\contour{black}{\textcolor{ForestGreen}{#1\hspace{0.1ex}]}}}; 
+}}
+
+\tikzset{numberdiamond/.pic={
+	\node[minimum width=1.75in, minimum height=1.75in, inner sep=0pt] at (0,0) {\Huge\mydiamond};
+	\node at (0,0) {\LARGE\contour{black}{\textcolor{white}{#1}}};
+}}
+
+\tikzset{numberdiamondalt/.pic={
+	\node at (0,0) {\Large\contour{black}{\textcolor{Goldenrod}{#1\hspace{0.1ex}]}}}; 
+}}
+
+\tikzset{numberheart/.pic={
+	\node[minimum width=1.75in, minimum height=1.75in, inner sep=0pt] at (0,0) {\Huge\myheart};
+	\node at (0,0.15ex) {\LARGE\contour{black}{\textcolor{white}{#1}}};
+}}
+
+\tikzset{numberheartalt/.pic={
+	\node at (0,0) {\Large\contour{black}{\textcolor{Red}{#1\hspace{0.1ex}]}}}; 
+}}
+
+\tikzset{numberspade/.pic={
+	\node[minimum width=1.75in, minimum height=1.75in, inner sep=0pt] at (0,0) {\Huge\myspade};
+	\node at (0,0) {\LARGE\contour{black}{\textcolor{white}{#1}}};
+}}
+
+\tikzset{numberspadealt/.pic={
+	\node at (0,0) {\Large\contour{black}{\textcolor{RoyalBlue}{#1\hspace{0.1ex}]}}}; 
+}}
+
+%%%%%%%%%%%%%%
+% Card Backs %
+%%%%%%%%%%%%%%
+
+\tikzset{cardbackpattern/.pic={
+	\foreach \i in {-1.75in, -1.5in, -1.25in, -1.0in, -0.75in, -0.5in, -0.25in, 0in, 0.25in, 0.5in, 0.75in, 1.0in, 1.25in, 1.5in, 1.75in}
+		\foreach \j in {-1.75in, -1.5in, -1.25in, -1.0in, -0.75in, -0.5in, -0.25in, 0in, 0.25in, 0.5in, 0.75in, 1.0in, 1.25in, 1.5in, 1.75in}
+			\draw[very thick, #1] (\i,\j) circle (0.105in);
+
+	\foreach \i in {-1.875in, -1.625in, -1.375in, -1.125in, -0.875in, -0.625in, -0.375in, -0.125in, 0.125in, 0.375in, 0.625in, 0.875in, 1.125in, 1.375in, 1.625in, 1.875in}
+		\foreach \j in {-1.875in, -1.625in, -1.375in, -1.125in, -0.875in, -0.625in, -0.375in, -0.125in, 0.125in, 0.375in, 0.625in, 0.875in, 1.125in, 1.375in, 1.625in, 1.875in}
+			\draw[very thick, #1] (\i,\j) circle (0.105in);
+}}
+
+\tikzset{quadcardback/.pic={
+	\begin{scope}
+	\clip (-\cardwidth/2 - \bleed, 0in) --%
+	      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+	      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+	      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+	      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+	      cycle;
+	% Pattern for card back
+	\path[fill=#1] (-\cardwidth/2 - \bleed, 0in) --%
+	      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+	      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+	      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+	      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+	      cycle;
+	\pic () at (0,0) {cardbackpattern={black}};
+	% Cutting guides for corners of the cards	
+\end{scope}
+}}
+
+
+
+\tikzset{pics/quadcardfront/.style n args={4}{
+	code={
+		\begin{scope}
+		\clip (-\cardwidth/2 - \bleed, 0in) --%
+		      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+		      cycle;
+		% Pattern for card front
+		\pic[rotate=0, transform shape] () at (-0.875in, 0.875in) {numberclub={#1}};
+		\pic[rotate=-90, transform shape] () at (0.875in, 0.875in) {numberdiamond={#2}};
+		\pic[rotate=-270, transform shape] () at (-0.875in, -0.875in) {numberheart={#3}};
+		\pic[rotate=-180, transform shape] () at (0.875in, -0.875in) {numberspade={#4}};
+
+		\draw[line width=1mm] (-2in,0) -- (2in,0);
+		\draw[line width=1mm] (0,-2in) -- (0,2in);
+
+		% Cutting guides for corners of the cards	
+		\pic () at (0,0) {cutguide={black}};
+		\end{scope}
+	}
+}}
+
+\tikzset{pics/altquadcardfront/.style n args={4}{
+	code={
+		\begin{scope}
+		\clip (-\cardwidth/2 - \bleed, 0in) --%
+		      (-\cardwidth/2 - \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, \cardheight/2 + \bleed) --%
+		      (\cardwidth/2 + \bleed, -\cardheight/2 - \bleed) --%
+		      (-\cardwidth/2 - \bleed, -\cardheight/2 - \bleed) --%
+		      cycle;
+		% Pattern for card front
+		\pic[rotate=0, transform shape] () at (-0.875in, 0.875in) {numberclubalt={#1}};
+		\pic[rotate=-90, transform shape] () at (0.875in, 0.875in) {numberdiamondalt={#2}};
+		\pic[rotate=-270, transform shape] () at (-0.875in, -0.875in) {numberheartalt={#3}};
+		\pic[rotate=-180, transform shape] () at (0.875in, -0.875in) {numberspadealt={#4}};
+
+		\draw[line width=1mm] (-2in,0) -- (2in,0);
+		\draw[line width=1mm] (0,-2in) -- (0,2in);
+
+		% Cutting guides for corners of the cards	
+		\pic () at (0,0) {cutguide={black}};
+		\end{scope}
+	}
+}}

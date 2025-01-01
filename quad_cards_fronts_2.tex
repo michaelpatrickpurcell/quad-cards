@@ -1,0 +1,18 @@
+\documentclass{standalone}
+\usepackage{quadcards}
+
+\begin{document}
+\begin{tikzpicture}
+\path (-105mm, -148.5mm) -- (105mm, 148.5mm);
+
+\pic at (-\horizdist/2,\vertdist) {quadcardfront={=}{J}{\phantom{.}\hspace{-0.3ex}9\hspace{-0.3ex}.}{\phantom{.}\hspace{-0.3ex}6\hspace{-0.3ex}.}};
+\pic at (\horizdist/2,\vertdist) {quadcardfront={5}{4\hspace{0.1ex}}{2}{\phantom{.}\hspace{-0.3ex}9\hspace{-0.3ex}.}};
+
+\pic at (-\horizdist/2,0\vertdist) {quadcardfront={J}{8}{4\hspace{0.1ex}}{K}};
+\pic at (\horizdist/2,0\vertdist) {quadcardfront={2}{A}{J}{7}};
+
+\pic at (-\horizdist/2,-\vertdist) {quadcardfront={K}{\phantom{.}\hspace{-0.3ex}6\hspace{-0.3ex}.}{Q}{2}};
+\pic at (\horizdist/2,-\vertdist) {quadcardfront={A}{\phantom{.}\hspace{-0.3ex}9\hspace{-0.3ex}.}{K}{3}};
+
+\end{tikzpicture}
+\end{document}

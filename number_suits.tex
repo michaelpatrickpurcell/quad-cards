@@ -1,0 +1,44 @@
+\documentclass{standalone}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usepackage{fontspec}
+\setmainfont{Card Characters}
+
+\usepackage{contour}
+\contournumber{128}
+
+\newcommand{\myten}{\textcolor{black}{=}}
+\newcommand{\myclub}{\contour{black}{\textcolor{ForestGreen}{]}}}
+\newcommand{\mydiamond}{\contour{black}{\textcolor{Goldenrod}{[}}}
+\newcommand{\myheart}{\contour{black}{\textcolor{Red}{\{}}}
+\newcommand{\myspade}{\contour{black}{\textcolor{Blue}{\}}}}
+
+\tikzset{numberclub/.pic={
+	\node at (0,0) {\Huge\myclub};
+	\node at (0,0) {\LARGE\contour{black}{\textcolor{white}{#1}}};
+}}
+
+\tikzset{numberdiamond/.pic={
+	\node at (0,0) {\Huge\mydiamond};
+	\node at (0,0) {\LARGE\contour{black}{\textcolor{white}{#1}}};
+}}
+
+\tikzset{numberheart/.pic={
+	\node at (0,0) {\Huge\myheart};
+	\node at (0,0) {\LARGE\contour{black}{\textcolor{white}{#1}}};
+}}
+
+\tikzset{numberspade/.pic={
+	\node at (0,0) {\Huge\myspade};
+	\node at (0,0) {\LARGE\contour{black}{\textcolor{white}{#1}}};
+}}
+
+\begin{document}
+\begin{tikzpicture}
+\pic at (0,0) {numberclub={A}};
+\pic at (1cm,0) {numberdiamond={J\hspace{1.5pt}}};
+\pic at (2cm,0) {numberheart={4\hspace{2pt}}};
+\pic at (3cm,0) {numberspade={=}};
+
+\end{tikzpicture}
+\end{document}
